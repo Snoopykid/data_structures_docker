@@ -86,7 +86,51 @@ int main()
 
 void moveOddItemsToBack(LinkedList *ll)
 {
-	/* add your code here */
+	int checked = 0;
+	int n = ll -> size;
+	int i = 0;
+	int val = 0;
+
+	while (checked < n)
+	{
+		if (findNode(ll, i)->item % 2 == 1){
+			val = findNode(ll, i)-> item;
+			removeNode(ll, i);
+			insertNode(ll, ll->size, val);
+			checked += 1;
+		}
+		else{
+			i += 1;
+			checked += 1;
+		}
+	}
+	
+	
+	/* 
+	3. (moveOddItemsToBackLL) 연결 리스트에서 모든 홀수 정수를 리스트의 뒤쪽으로 옮기는 
+	C 함수 moveOddItemsToBackLL()을 작성하십시오.
+
+	先找出odd number个数count，遍历count次每次放后一个，重要的是temp和count在每次遍历都要初始化
+"먼저 홀수 개수(count)를 구한다. 그 다음 count번 반복하면서 매번 하나씩 뒤로 보낸다. 중요한 건 
+temp와 count는 매 반복마다 초기화해야 한다는 것."
+
+	함수 프로토타입은 다음과 같습니다.	void moveOddItemsToBackLL(LinkedList *ll);
+
+다음은 몇 가지 입력 및 출력 예시입니다:
+
+연결 리스트가 2, 3, 4, 7, 15, 18인 경우:
+홀수 정수를 리스트 뒤쪽으로 옮긴 결과 연결 리스트는 다음과 같습니다: 2 4 18 3 7 15
+
+연결 리스트가 2, 7, 18, 3, 4, 15인 경우:
+홀수 정수를 리스트 뒤쪽으로 옮긴 결과 연결 리스트는 다음과 같습니다: 2 18 4 7 3 15
+
+현재 연결 리스트가 1, 3, 5인 경우:
+홀수 정수를 리스트 뒤쪽으로 옮긴 결과 연결 리스트는 다음과 같습니다: 1 3 5
+
+현재 연결 리스트가 2 4 6인 경우:
+홀수 정수를 리스트 뒤쪽으로 옮긴 결과 연결 리스트는 다음과 같습니다: 2 4 6
+	
+	*/
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

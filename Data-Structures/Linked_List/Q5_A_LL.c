@@ -102,7 +102,81 @@ int main()
 
 void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList)
 {
-	/* add your code here */
+	int FIX_SIZE = ll->size;
+	int FRONT_SIZE = (FIX_SIZE + 1) / 2 ;
+	int BACK_SIZE = FIX_SIZE - FRONT_SIZE;
+
+
+	for (int i = 0; i < FRONT_SIZE; i++)	
+	{
+		int val = ll->head->item;
+		insertNode(resultFrontList, i, val);
+		removeNode(ll, 0);
+
+	}
+	for (int i = 0; i < BACK_SIZE; i++)
+	{
+		int val = ll->head->item;
+		insertNode(resultBackList, i, val);
+		removeNode(ll, 0);
+
+	}
+
+
+	/* 
+	
+	5. (frontBackSplitLL) 단일 연결 리스트를 앞쪽 절반과 뒤쪽 절반, 두 개의 하위 리스트로 
+	분할하는 C 함수 frontBackSplitLL()을 작성하십시오. 원소 개수가 홀수인 경우, 
+	남는 하나의 원소는 앞쪽(front) 리스트에 들어가야 합니다. frontBackSplitLL()은 
+	frontList와 backList, 두 리스트를 출력합니다.
+
+	함수 프로토타입은 다음과 같습니다.
+	void frontBackSplitLL(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList);
+
+fixsize = ll->size
+"원래 크기를 fixsize에 저장" — 2번과 같은 맥락으로, 분할 도중 리스트 크기가 변하니 시작 전 
+원본 크기를 따로 저장해두고 그걸로 앞/뒤 절반을 나누라는 힌트.
+
+예를 들어, 주어진 연결 리스트가 2, 3, 5, 6, 7이라고 가정합니다.
+결과 연결 리스트 frontList와 backList는 다음과 같습니다:
+	frontList: 2, 3, 5
+	backList: 6, 7
+
+다음은 입력 및 출력 예시입니다:
+1: 연결 리스트에 정수를 삽입합니다:
+2: 연결 리스트를 출력합니다:
+3: 연결 리스트를 두 개의 연결 리스트(frontList, backList)로 분할합니다:
+0: 종료:
+
+선택 사항(1/2/3/0)을 입력하세요: 1
+연결 리스트에 추가할 정수를 입력하세요: 2
+결과 연결 리스트는 다음과 같습니다: 2
+
+선택 사항(1/2/3/0)을 입력하세요: 1
+연결 리스트에 추가할 정수를 입력하세요: 3
+결과 연결 리스트는 다음과 같습니다: 2 3
+
+선택 사항(1/2/3/0)을 입력하세요: 1
+연결 리스트에 추가할 정수를 입력하세요: 5
+결과 연결 리스트는 다음과 같습니다: 2 3 5
+
+선택 사항(1/2/3/0)을 입력하세요: 1
+연결 리스트에 추가할 정수를 입력하세요: 6
+결과 연결 리스트는 다음과 같습니다: 2 3 5 6
+
+선택 사항(1/2/3/0)을 입력하세요: 1
+연결 리스트에 추가할 정수를 입력하세요: 7
+결과 연결 리스트는 다음과 같습니다: 2 3 5 6 7
+
+선택 사항(1/2/3/0)을 입력하세요: 2
+결과 연결 리스트는 다음과 같습니다: 2 3 5 6 7
+
+선택 사항(1/2/3/0)을 입력하세요: 3
+주어진 연결 리스트를 분할한 결과 연결 리스트는 다음과 같습니다:
+Front linked list: 2 3 5
+Back linked list: 6 7
+	
+	*/
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

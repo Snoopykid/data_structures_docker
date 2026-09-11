@@ -87,7 +87,67 @@ int main()
 
 void RecursiveReverse(ListNode **ptrHead)
 {
-	/* add your code here */
+	ListNode *first = *ptrHead;
+
+	if (first == NULL || first -> next == NULL){return;}
+	
+
+	ListNode *rest = first->next;
+	RecursiveReverse(&rest);
+
+	first->next->next = first;
+	first->next = NULL;
+	*ptrHead = rest;
+
+/*
+ListNode 두 개, *first, *rest. NULL이면 바로 return. recursive(&rest) 재귀 호출. 
+first->next->next = first; first->next = NULL; *ptrHead = rest;
+*/
+	/* 
+	
+	7. (recursiveReverse) 주어진 연결 리스트의 next 포인터와 head 포인터를 바꿔가며 
+	재귀적으로 리스트를 뒤집는 C 함수 recursiveReverse()를 작성하십시오.
+
+	함수 프로토타입은 다음과 같습니다.	void recursiveReverse(ListNode **ptrHead);
+
+예를 들어, 연결 리스트가 (1, 2, 3, 4, 5)인 경우, 결과 연결 리스트는 (5, 4, 3, 2, 1)이 됩니다.
+
+背, 两个Listnode, *first, *rest, 如有NULL直接return；recursive (&rest) ；
+first-next-next = first; first-next = NULL; *ptrHead = rest;
+"외워라: ListNode 두 개, *first, *rest. NULL이면 바로 return. recursive(&rest) 재귀 호출. 
+first->next->next = first; first->next = NULL; *ptrHead = rest;"
+(이건 사실상 재귀 리스트 뒤집기의 거의 완전한 알고리즘 골격이야.)
+
+1: 연결 리스트에 정수를 삽입합니다:
+2: 뒤집힌 연결 리스트:
+0: 종료:
+
+선택 사항(1/2/0)을 입력하세요: 1
+연결 리스트에 추가할 정수를 입력하세요: 1
+결과 연결 리스트는 다음과 같습니다: 1
+
+선택 사항(1/2/0)을 입력하세요: 1
+연결 리스트에 추가할 정수를 입력하세요: 2
+결과 연결 리스트는 다음과 같습니다: 1 2
+
+선택 사항(1/2/0)을 입력하세요: 1
+연결 리스트에 추가할 정수를 입력하세요: 3
+결과 연결 리스트는 다음과 같습니다: 1 2 3
+
+선택 사항(1/2/0)을 입력하세요: 1
+연결 리스트에 추가할 정수를 입력하세요: 4
+결과 연결 리스트는 다음과 같습니다: 1 2 3 4
+
+선택 사항(1/2/0)을 입력하세요: 1
+연결 리스트에 추가할 정수를 입력하세요: 5
+결과 연결 리스트는 다음과 같습니다: 1 2 3 4 5
+
+선택 사항(1/2/0)을 입력하세요: 2
+원소를 뒤집은 결과 연결 리스트는 다음과 같습니다: 5 4 3 2 1
+
+선택 사항(1/2/0)을 입력하세요: 0
+	
+	*/
 }
 
 //////////////////////////////////////////////////////////////////////////////////

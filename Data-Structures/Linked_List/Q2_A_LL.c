@@ -103,7 +103,65 @@ int main()
 
 void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
 {
-    /* add your code here */
+	int FIX_SIZE1 = ll1->size;
+	int FIX_SIZE2 = ll2->size;
+	int n;
+	if(FIX_SIZE1 <= FIX_SIZE2)
+	n = FIX_SIZE1;
+	if (FIX_SIZE1 > FIX_SIZE2 )
+	n = FIX_SIZE2;
+
+	for (int i = 0; i < n ; i++)
+	{
+		int value = ll2->head->item;
+		removeNode(ll2, 0);
+		insertNode(ll1, 2*i+1, value);
+	}
+	
+	
+	
+	
+    /* 
+	2. (alternateMergeLL) 두 번째 리스트의 노드들을 첫 번째 리스트의 교대(번갈아 나오는) 위치에 삽입하는 
+	C 함수 alternateMergeLL()을 작성하십시오. 두 번째 리스트의 노드는 첫 번째 리스트에 
+	교대로 들어갈 자리가 있을 때만 삽입되어야 합니다.
+
+两个fixsize变量
+"두 개의 fixsize 변수가 필요함" — 즉 병합 도중 리스트 길이가 계속 바뀌니까, 시작 전에 원래 LinkedList1과 
+LinkedList2의 크기를 각각 변수에 저장해두고 그 값을 기준으로 반복 횟수를 정하라는 뜻.
+
+
+	함수 프로토타입은 다음과 같습니다.	void alternateMergeLL(LinkedList *ll1, LinkedList *ll2);
+
+예를 들어, 주어진 두 연결 리스트가 LinkedList1과 LinkedList2라고 가정합니다:
+	LinkedList1: 1, 2, 3
+	LinkedList2: 4, 5, 6, 7
+
+결과 연결 리스트는 다음과 같습니다:
+	LinkedList1: 1, 4, 2, 5, 3, 6
+	LinkedList2: 7
+
+첫 번째 리스트가 두 번째 리스트보다 큰 경우, 두 번째 리스트는 비어있게 됩니다. 예를 들어, 
+	주어진 두 연결 리스트가 LinkedList1과 LinkedList2라고 가정합니다:
+	LinkedList1: 1, 5, 7, 3, 9, 11
+	LinkedList2: 6, 10, 2, 4
+
+결과 연결 리스트는 다음과 같습니다:
+	LinkedList1: 1, 6, 5, 10, 7, 2, 3, 4, 9, 11
+	LinkedList2: 비어있음
+
+다음은 입력 및 출력 예시입니다 (현재 연결 리스트 1: 1, 2, 3, 연결 리스트 2: 4, 5, 6, 7인 경우):
+
+Linked list 1: 1 2 3
+Linked list 2: 4 5 6 7
+선택 사항(1/2/3/0)을 입력하세요: 3
+주어진 연결 리스트를 병합한 결과 연결 리스트는 다음과 같습니다:
+Linked list 1: 1 4 2 5 3 6
+Linked list 2: 7
+	*/
+
+
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

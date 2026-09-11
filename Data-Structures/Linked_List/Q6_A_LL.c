@@ -88,7 +88,82 @@ int main()
 
 int moveMaxToFront(ListNode **ptrHead)
 {
-    /* add your code here */
+	if(*ptrHead == NULL || (*ptrHead)->next == NULL) return 0;
+
+	ListNode *max = *ptrHead;
+	ListNode *maxpre = NULL;
+	ListNode *pre = *ptrHead;
+	ListNode *cur = pre -> next;
+
+	while (cur != NULL)
+	{
+		if (cur->item > max->item){
+			max = cur;
+			maxpre = pre;
+		}
+		pre = cur;
+		cur = cur->next;
+	}
+	if(maxpre == NULL){return 0;}
+
+	maxpre->next = max->next;
+	max->next = *ptrHead;
+	*ptrHead = max;
+
+	return 0;
+    /* 
+
+	6. (moveMaxToFront) 정수로 이루어진 연결 리스트를 최대 한 번만 순회하여, 가장 큰 값을 
+	가진 노드를 리스트의 맨 앞으로 옮기는 C 함수 moveMaxToFront()를 작성하십시오.
+
+如果只有一个term，直接过；else 设三个listnode，一个遍历(遍完要初始化)，一个指最大，一个指最大前面；
+front->next == max->next; max->next = *ptrHead; *ptrHead = max;
+
+"노드가 하나뿐이면 그냥 넘어간다. 아니면 ListNode 3개를 준비: 하나는 순회용(순회 끝나면 초기화 필요), 
+하나는 최댓값 노드를 가리킴, 하나는 최댓값 노드의 바로 앞 노드를 가리킴.
+(최댓값을 떼어낼 때) front->next = max->next; max->next = *ptrHead; *ptrHead = max;"
+(참고: 여기 ==는 비교가 아니라 대입 =의 오타/필기 실수로 보임 — 최댓값 노드를 리스트에서 떼어내서 
+맨 앞에 붙이는 3줄짜리 전형적인 패턴.)
+
+
+	함수 프로토타입은 다음과 같습니다.	int moveMaxToFront(ListNode **ptrHead);
+
+这个函数头不同于之前：1.故Insertnode功能不可用 2.ListNode *temp；temp = *ptrHead；
+"이 함수 시그니처는 이전 문제들과 다름: 1) 그래서 (이전에 쓰던) Insertnode 함수를 그대로 쓸 수 없음. 
+2) ListNode *temp; temp = *ptrHead;로 시작해야 함."
+
+예를 들어, 연결 리스트가 (30, 20, 40, 70, 50)인 경우, 결과 연결 리스트는 (70, 30, 20, 40, 50)이 됩니다.
+
+1: 연결 리스트에 정수를 삽입합니다:
+2: 가장 큰 값을 가진 노드를 리스트의 맨 앞으로 옮깁니다:
+0: 종료:
+
+선택 사항(1/2/0)을 입력하세요: 1
+연결 리스트에 추가할 정수를 입력하세요: 30
+연결 리스트는 다음과 같습니다: 30
+
+선택 사항(1/2/0)을 입력하세요: 1
+연결 리스트에 추가할 정수를 입력하세요: 20
+연결 리스트는 다음과 같습니다: 30 20
+
+선택 사항(1/2/0)을 입력하세요: 1
+연결 리스트에 추가할 정수를 입력하세요: 40
+연결 리스트는 다음과 같습니다: 30 20 40
+
+선택 사항(1/2/0)을 입력하세요: 1
+연결 리스트에 추가할 정수를 입력하세요: 70
+연결 리스트는 다음과 같습니다: 30 20 40 70
+
+선택 사항(1/2/0)을 입력하세요: 1
+연결 리스트에 추가할 정수를 입력하세요: 50
+연결 리스트는 다음과 같습니다: 30 20 40 70 50
+
+선택 사항(1/2/0)을 입력하세요: 2
+결과 연결 리스트는 다음과 같습니다: 70 30 20 40 50
+
+선택 사항(1/2/0)을 입력하세요: 0
+	
+	*/
 }
 
 //////////////////////////////////////////////////////////////////////////////////

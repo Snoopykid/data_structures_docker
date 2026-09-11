@@ -86,7 +86,50 @@ int main()
 
 void moveEvenItemsToBack(LinkedList *ll)
 {
-	/* add your code here */
+	int checked = 0;
+	int n = ll -> size;
+	int i = 0;
+	int val = 0;
+
+	while (checked < n)
+	{
+		if (findNode(ll, i)->item % 2 == 0){
+			val = findNode(ll, i)-> item;
+			removeNode(ll, i);
+			insertNode(ll, ll->size, val);
+			checked += 1;
+		}
+		else{
+			i += 1;
+			checked += 1;
+		}
+	}
+
+
+
+
+	/* 
+	
+	4. (moveEvenItemsToBackLL) 연결 리스트에서 모든 짝수 정수를 리스트의 뒤쪽으로 옮기는 
+	C 함수 moveEvenItemsToBackLL()을 작성하십시오.
+
+	함수 프로토타입은 다음과 같습니다.	void moveEvenItemsToBackLL(LinkedList *ll);
+
+다음은 몇 가지 입력 및 출력 예시입니다:
+
+연결 리스트가 2, 3, 4, 7, 15, 18인 경우:
+짝수 정수를 리스트 뒤쪽으로 옮긴 결과 연결 리스트는 다음과 같습니다: 3 7 15 2 4 18
+
+연결 리스트가 2, 7, 18, 3, 4, 15인 경우:
+짝수 정수를 리스트 뒤쪽으로 옮긴 결과 연결 리스트는 다음과 같습니다: 7 3 15 2 18 4
+
+현재 연결 리스트가 1, 3, 5인 경우:
+짝수 정수를 리스트 뒤쪽으로 옮긴 결과 연결 리스트는 다음과 같습니다: 1 3 5
+
+현재 연결 리스트가 2 4 6인 경우:
+짝수 정수를 리스트 뒤쪽으로 옮긴 결과 연결 리스트는 다음과 같습니다: 2 4 6
+
+	*/
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
