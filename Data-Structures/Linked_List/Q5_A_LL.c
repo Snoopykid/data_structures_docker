@@ -102,25 +102,30 @@ int main()
 
 void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList)
 {
-	int FIX_SIZE = ll->size;
-	int FRONT_SIZE = (FIX_SIZE + 1) / 2 ;
-	int BACK_SIZE = FIX_SIZE - FRONT_SIZE;
+	int FIX_SIZE = ll->size;              // 원본 리스트의 전체 크기를 고정해서 저장
+	                                       //   (아래에서 ll을 계속 비워나가므로 size가 계속 줄어들기 때문)
+	int FRONT_SIZE = (FIX_SIZE + 1) / 2;  // 앞쪽 리스트로 보낼 개수 (홀수면 앞쪽이 1개 더 많음, 올림 계산)
+	int BACK_SIZE = FIX_SIZE - FRONT_SIZE; // 뒤쪽 리스트로 보낼 개수 (나머지)
 
-
-	for (int i = 0; i < FRONT_SIZE; i++)	
+	for (int i = 0; i < FRONT_SIZE; i++)     // 앞쪽 개수만큼 반복
 	{
-		int val = ll->head->item;
-		insertNode(resultFrontList, i, val);
-		removeNode(ll, 0);
-
+		int val = ll->head->item;              // 원본 리스트의 맨 앞 값을 읽음
+		insertNode(resultFrontList, i, val);   // 그 값을 앞쪽 결과 리스트의 i번 자리(=끝)에 삽입
+		removeNode(ll, 0);                      // 원본 리스트에서 방금 읽은 맨 앞 노드 제거
 	}
-	for (int i = 0; i < BACK_SIZE; i++)
+	for (int i = 0; i < BACK_SIZE; i++)        // 뒤쪽 개수만큼 반복 (이 시점에 원본엔 뒷부분만 남음)
 	{
-		int val = ll->head->item;
-		insertNode(resultBackList, i, val);
-		removeNode(ll, 0);
-
+		int val = ll->head->item;               // 남은 원본의 맨 앞 값을 읽음 (원래 리스트 기준 뒷부분)
+		insertNode(resultBackList, i, val);      // 뒤쪽 결과 리스트의 i번 자리에 삽입
+		removeNode(ll, 0);                        // 원본에서 제거
 	}
+/*
+개선하면 좋을 점: 
+1. 스타일 면에서 FIX_SIZE, FRONT_SIZE, BACK_SIZE를 전부 대문자로 쓰는 건 보통 매크로 상수(#define)나 const에 쓰는 컨벤션이에요. 
+이건 지역변수라서 fixSize, frontSize, backSize처럼 일반 변수 표기로 쓰는 게 C 스타일 관례에 더 맞아요 
+(동작엔 전혀 문제없지만, 가독성/컨벤션 측면).
+
+*/
 
 
 	/* 

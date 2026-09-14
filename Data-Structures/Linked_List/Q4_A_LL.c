@@ -86,25 +86,28 @@ int main()
 
 void moveEvenItemsToBack(LinkedList *ll)
 {
-	int checked = 0;
-	int n = ll -> size;
-	int i = 0;
-	int val = 0;
+	int checked = 0;       // 확인한 원소 개수 카운터
+	int n = ll->size;       // 원래 리스트 크기 (고정 기준값)
+	int i = 0;                // 현재 검사 인덱스
+	int val = 0;               // 짝수 값을 임시 보관할 변수
 
 	while (checked < n)
 	{
-		if (findNode(ll, i)->item % 2 == 0){
-			val = findNode(ll, i)-> item;
-			removeNode(ll, i);
-			insertNode(ll, ll->size, val);
+		if (findNode(ll, i)->item % 2 == 0){    // i번째 값이 짝수인지 확인
+			val = findNode(ll, i)->item;          // 값 저장
+			removeNode(ll, i);                     // 제거
+			insertNode(ll, ll->size, val);          // 맨 끝에 재삽입
 			checked += 1;
 		}
 		else{
-			i += 1;
+			i += 1;         // 홀수면 다음 인덱스로
 			checked += 1;
 		}
 	}
-
+/*
+개선하면 좋을 점: 
+1. findNode 중복 호출 줄이기, O(n²) → O(n) 최적화 고려.
+*/
 
 
 

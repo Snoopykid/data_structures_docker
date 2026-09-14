@@ -108,10 +108,29 @@ int main()
 ////////////////////////////////////////////////////////////
 
 void recursiveReverse(Queue *q)
-{
-/* add your code here */
+{	
+	int temp;
+	if (q->ll.head == NULL) return;
+	temp = dequeue(q);
+	recursiveReverse(q);
+	enqueue(q, temp);
 }
 
+/* 5. (recursiveReverseQueue) 정수들이 저장된 큐의 순서를 재귀적으로 뒤집는 C 함수 
+	recursiveReverseQueue()를 작성하십시오.
+
+	함수 프로토타입은 다음과 같습니다:
+	void recursiveReverseQueue(Queue *q);
+
+	예시: 큐가 (1, 2, 3, 4, 5)이면 결과 큐는 (5, 4, 3, 2, 1)이 됩니다.
+
+	힌트 (거의 정답 수준):
+	int temp;
+	if (q->ll.head == NULL) return;
+	temp = dequeue(q);
+	recursiveReverseQueue(q);
+	enqueue(q, temp);
+*/
 //////////////////////////////////////////////////////////////////
 
 void removeAllItemsFromQueue(Queue *q)

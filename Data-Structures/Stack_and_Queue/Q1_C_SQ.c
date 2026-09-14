@@ -92,7 +92,7 @@ int main()
 			break;
 		case 3:
 			removeOddValues(&q); // You need to code this function
-			printf("The resulting queue after removing odd integers is: ");
+			printf("The resulting queue after removing odd integers is: "); 
 			printList(&(q.ll));
 			removeAllItemsFromQueue(&q);
 			removeAllItems(&ll);
@@ -116,13 +116,55 @@ int main()
 
 void createQueueFromLinkedList(LinkedList *ll, Queue *q)
 {
-	/* add your code here */
+	ListNode *temp = ll->head;
+
+	removeAllItemsFromQueue(q);
+		
+	while (temp != NULL) {
+			// 
+		enqueue(q, temp->item) ;
+		temp = temp->next;
+	}
 }
 
 void removeOddValues(Queue *q)
 {
-	/* add your code here */
+	int size = q->ll.size;	
+	int val;
+
+	for (int i = 0; i < size; i++)
+	{
+		val = dequeue(q);
+		if (val % 2 != 0)
+			{continue;}
+		else if (val % 2 == 0)
+		{
+			enqueue(q, val);
+		}
+	}
 }
+
+/* 1. (createQueueFromLinkedList) 연결 리스트에 저장된 모든 정수를 큐(연결 리스트 기반)에 
+	enqueue하여 큐를 생성하는 C 함수 createQueueFromLinkedList()를 작성하십시오.
+	연결 리스트의 첫 번째 노드가 가장 먼저 enqueue되고, 그다음 두 번째 노드, 이런 식으로 진행됩니다.
+	만약 큐가 비어있지 않다면, 시작하기 전에 큐를 반드시 비워야 함을 기억하세요.
+
+	함수 프로토타입은 다음과 같습니다:
+	void createQueueFromLinkedList(LinkedList *ll, Queue *q);
+
+	예시 입출력 (현재 연결 리스트가 1, 2, 3, 4, 5인 경우):
+	결과 연결 리스트: 1 2 3 4 5
+	선택 사항(1/2/3/0)을 입력하세요: 2
+	결과 큐: 1 2 3 4 5
+
+	힌트:
+	ListNode *temp = ll->head;
+	while (temp != NULL) {
+		// 원하는 동작 수행 //
+		temp = temp->next;
+	}
+*/
+
 
 //////////////////////////////////////////////////////////////////////////////////
 

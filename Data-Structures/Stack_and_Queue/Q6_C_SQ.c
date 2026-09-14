@@ -66,7 +66,7 @@ int main()
 	s.ll.size = 0;
 
 	printf("1: Insert an integer into the stack:\n");
-	printf("3: Remove values until the given value;\n");
+	printf("2: Remove values until the given value;\n");
 	printf("0: Quit:\n");
 
 
@@ -111,9 +111,38 @@ int main()
 
 void removeUntil(Stack *s, int value)
 {
-/* add your code here */
+	if (s->ll.size == 0){return;}
+	int size = s->ll.size;
+
+	for (int i = 0; i < size; i++)
+	{
+		if (s->ll.head->item == value)
+		{
+			return ;
+		}
+		pop(s);
+	}
+	return;
+
 }
 
+/* 6. (removeUntilStack) 스택에서 특정 값이 처음 나타날 때까지 값을 계속 pop하는 
+	C 함수 removeUntilStack()를 작성하십시오.
+
+	함수 프로토타입은 다음과 같습니다:
+	void removeUntilStack(Stack *s, int value);
+
+	예시:
+	스택 (1, 2, 3, 4, 5, 6, 7) (맨 왼쪽이 top)에서 value = 4로 호출하면 
+	→ 결과 스택: (4, 5, 6, 7)
+
+	스택 (10, 20, 15, 25, 5) (맨 왼쪽이 top)에서 value = 15로 호출하면 
+	→ 결과 스택: (15, 25, 5)
+
+	힌트:
+	for문도 while문처럼 break로 빠져나올 수 있음
+	s->ll.size == 0인 경우도 반드시 고려할 것
+*/
 //////////////////////////////////////////////////////////////////////////////////
 
 void removeAllItemsFromStack(Stack *s)

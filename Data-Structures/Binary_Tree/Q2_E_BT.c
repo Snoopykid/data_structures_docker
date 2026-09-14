@@ -97,9 +97,51 @@ int main()
 int maxHeight(BTNode *node)
 
 {
-    /* add your code here */
+    if (node == NULL){return -1;}
+    int lHeight = 0;
+    int rHeight = 0;
+
+    lHeight += maxHeight(node->left);
+    rHeight += maxHeight(node->right);
+
+    if (lHeight >= rHeight){return lHeight +1;}
+    else if (lHeight < rHeight){return rHeight +1;}
+    
 }
 
+/* 2. (maxHeight) 이진 트리의 루트 노드를 가리키는 포인터를 받아서, 
+	루트에서 가장 먼 리프 노드까지의 최장 경로 상의 링크 개수(높이)를 반환하는 
+	C 함수 maxHeight()를 작성하십시오. 특정 노드의 높이란, 그 노드에서 
+	가장 깊은 리프 노드까지의 링크 개수를 의미합니다. 
+	(힌트: 빈 트리의 높이는 -1로 간주합니다.)
+
+	함수 프로토타입은 다음과 같습니다:
+	int maxHeight(BTNode *root)
+
+	예시: 이진 트리 (1, 2, 3, 4, 5, 6, 7) (Figure 2)에서 최대 높이는 2입니다.
+
+	예시 입출력:
+	1: 이진 트리 생성
+	2: 이진 트리의 최대 높이 찾기
+	0: 종료
+
+	선택 사항(1/2/0)을 입력하세요: 1
+	root 값을 입력하세요: 4
+	4의 왼쪽 자식: 2, 오른쪽 자식: 6
+	2의 왼쪽 자식: 1, 오른쪽 자식: 3
+	6의 왼쪽 자식: 5, 오른쪽 자식: 7
+	(나머지 자식들은 전부 'a'로 NULL 처리)
+	결과 이진 트리: 1 2 3 4 5 6 7
+
+	선택 사항(1/2/0)을 입력하세요: 2
+	이진 트리의 최대 높이: 2
+
+	선택 사항(1/2/0)을 입력하세요: 0
+
+	힌트:
+	NULL이면 return -1
+	그 외엔 왼쪽/오른쪽 서브트리 높이를 비교해서, 더 큰 쪽 + 1을 return
+*/
 ///////////////////////////////////////////////////////////////////////////////////
 
 BTNode *createBTNode(int item){

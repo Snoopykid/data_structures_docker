@@ -89,28 +89,39 @@ int main()
 int moveMaxToFront(ListNode **ptrHead)
 {
 	if(*ptrHead == NULL || (*ptrHead)->next == NULL) return 0;
+	// 리스트가 비어있거나(NULL) 노드가 1개뿐이면 이미 "정렬된" 상태나 다름없으니 그냥 종료
 
-	ListNode *max = *ptrHead;
-	ListNode *maxpre = NULL;
-	ListNode *pre = *ptrHead;
-	ListNode *cur = pre -> next;
+	ListNode *max = *ptrHead;    // 지금까지 찾은 "최댓값 노드"를 가리킴 (처음엔 head로 초기화)
+	ListNode *maxpre = NULL;      // max 노드의 "바로 앞 노드" (max가 head면 앞 노드가 없으므로 NULL)
+	ListNode *pre = *ptrHead;      // 현재 순회 중인 cur의 "바로 앞 노드"
+	ListNode *cur = pre->next;      // 실제로 순회하며 비교할 현재 노드 (head 다음부터 시작)
 
-	while (cur != NULL)
+	while (cur != NULL)               // 리스트 끝까지 순회
 	{
-		if (cur->item > max->item){
-			max = cur;
-			maxpre = pre;
+		if (cur->item > max->item){    // 지금까지의 최댓값보다 cur이 더 크면
+			max = cur;                    // 최댓값 노드 갱신
+			maxpre = pre;                  // 그 최댓값의 "앞 노드"도 같이 갱신 (나중에 떼어내려면 필요)
 		}
-		pre = cur;
-		cur = cur->next;
+		pre = cur;                       // pre를 한 칸 전진
+		cur = cur->next;                  // cur도 한 칸 전진
 	}
-	if(maxpre == NULL){return 0;}
+	if(maxpre == NULL){return 0;}        // 만약 최댓값이 이미 head였다면(한 번도 갱신 안 됐으면) 
+	                                       //   maxpre가 계속 NULL → 이동할 필요 없음, 그냥 종료
 
-	maxpre->next = max->next;
-	max->next = *ptrHead;
-	*ptrHead = max;
+	maxpre->next = max->next;              // max 노드를 리스트에서 떼어냄 (앞뒤를 직접 연결해서 우회)
+	max->next = *ptrHead;                   // max의 next를 원래 head로 연결 (max를 새 head로 만들 준비)
+	*ptrHead = max;                          // 실제로 head를 max로 교체
 
 	return 0;
+
+/*
+개선하면 좋을 점: 
+1. 함수가 int를 반환하는데 모든 경로에서 항상 0만 반환해요. 실제로 "값이 이동했는지 여부"를 의미 있게 쓰려면, 이동이 일어난 경우엔 return 1;, 
+이동이 필요 없던 경우엔 return 0;처럼 반환값에 의미를 담는 게 자연스러워요 (현재는 반환값이 사실상 아무 정보도 안 주고 있어서, void로 바꾸거나 
+반환값을 제대로 활용하는 것 중 하나가 좋을 것 같아요). 다만 이건 과제 프로토타입이 이미 int로 고정되어 있다면 그 스펙을 따르되, 
+내부적으로 1/0을 의미 있게 구분해주는 게 더 깔끔합니다.
+*/
+
     /* 
 
 	6. (moveMaxToFront) 정수로 이루어진 연결 리스트를 최대 한 번만 순회하여, 가장 큰 값을 

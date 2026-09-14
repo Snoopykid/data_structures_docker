@@ -112,9 +112,52 @@ int main()
 
 void reverse(Queue *q)
 {
-/* add your code here */
+	if (isEmptyQueue(q)){return;}
+	Stack s;
+	s.ll.head = NULL;
+	s.ll.size = 0;
+	int popq;
+	int sSize;
+	int pops;
+
+	int qSize = q->ll.size;
+	
+	while (qSize)
+	{
+		popq = dequeue(q);
+		push(&s, popq);
+		qSize--;
+
+	}
+	
+	sSize = s.ll.size;
+
+	while (sSize)
+	{
+		pops = pop(&s);
+		enqueue(q, pops);
+		sSize--;
+	}
+	
+	
+
+	
+
 }
 
+/* 4. (reverseQueue) 스택을 이용해 큐를 뒤집는 C 함수 reverseQueue()를 작성하십시오.
+	이 함수는 스택에 값을 추가/제거할 때 반드시 push()와 pop()만 사용해야 하고, 
+	큐에 값을 추가/제거할 때는 반드시 enqueue()와 dequeue()만 사용해야 합니다.
+	만약 스택이 비어있지 않다면, 시작하기 전에 스택을 반드시 비워야 함을 기억하세요.
+
+	함수 프로토타입은 다음과 같습니다:
+	void reverseQueue(Queue *q);
+
+	예시: 큐가 (1, 2, 3, 4, 5)이면 결과 큐는 (5, 4, 3, 2, 1)이 됩니다.
+
+	힌트:
+	스택을 사용하기 전에 반드시 초기화할 것.
+*/
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 void push(Stack *s, int item){

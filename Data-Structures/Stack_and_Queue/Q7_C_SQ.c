@@ -104,9 +104,78 @@ int main()
 ////////////////////////////////////////////////////////////
 int balanced(char *expression)
 {
-/* add your code here */
+	if (expression == NULL){return	1;}
+	Stack s;
+	s.ll.head = NULL;
+	s.ll.size = 0;
+	int top;
+
+	for (int i = 0; expression[i] != '\0'; i++)
+	{
+		if (expression[i] == '(' || expression[i] == '[' ||expression[i] == '{')
+		{
+			push(&s, expression[i]);
+		}
+		else if (expression[i] == ')' || expression[i] == ']' ||expression[i] == '}')
+		{
+			top = peek(&s);
+			if ((top == '(' && expression[i] == ')') || 
+				(top == '{' && expression[i] == '}') || 
+				(top == '[' && expression[i] == ']') )
+			{
+				pop(&s);
+			}
+			
+		}
+		
+	}
+	
+	if (s.ll.size != 0)
+	{
+		return 1;
+	}
+	else {return 0;}
+		
 }
 
+/* 7. (balanced) ()[]{} 문자로만 구성된 표현식이 "균형이 맞는지(balanced)" 판별하는 
+	C 함수 balanced()를 작성하십시오.
+
+	함수 프로토타입은 다음과 같습니다:
+	int balanced(char *expression);
+
+	예시: 아래는 괄호의 순서와 개수가 맞아서 balanced인 경우입니다:
+	()
+	([])
+	{[]()[]}
+
+	예시 입출력:
+	1: 문자열 입력
+	2: ()[]{} 문자로 구성된 표현식이 balanced인지 확인
+	0: 종료
+	선택 사항(1/0)을 입력하세요: 1
+	공백 없이 표현식을 입력하세요: {[]()[]}
+	{[]()[]}
+	balanced!
+	선택 사항(1/0)을 입력하세요: 0
+
+	balanced가 아닌 예시:
+	{{)]
+	[({{)])
+
+	예시 입출력:
+	선택 사항(1/0)을 입력하세요: 1
+	공백 없이 표현식을 입력하세요: [({{)])
+	[({{)])
+	not balanced!
+	선택 사항(1/0)을 입력하세요: 0
+
+	힌트:
+	스택 사용
+	여는 괄호 {[( 를 만나면 스택에 push
+	닫는 괄호 }])를 만나면 스택의 top(peek)과 짝이 맞는지 확인 → 맞으면 pop
+	마지막에 스택이 비어있는지 확인
+*/
 ////////////////////////////////////////////////////////////
 
 void removeAllItemsFromStack(Stack *s)

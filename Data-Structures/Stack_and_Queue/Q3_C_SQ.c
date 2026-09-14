@@ -103,9 +103,58 @@ int main()
 
 int isStackPairwiseConsecutive(Stack *s)
 {
-  /* add your code here */
+	int a = 0;
+	int b = 0;
+	int result;
+
+	if (s->ll.size % 2 == 1){return 0;}
+	if (s->ll.size == 0){return 1;}
+	
+	a = pop(s);
+	b = pop(s);
+
+	if (abs(a-b) != 1)
+	{
+		push(s, b);
+		push(s, a);
+
+		return 0;
+	}
+	else
+	{
+		result = isStackPairwiseConsecutive(s);
+		push(s, b);
+		push(s, a);
+
+		return result;
+	}  
 }
 
+/* 3. (isStackPairwiseConsecutive) 스택 안의 숫자들이 "쌍으로 연속된 값"인지 확인하는 함수 
+	isStackPairwiseConsecutive()를 작성하십시오. 이 함수는 값을 추가/제거할 때 
+	반드시 push()와 pop()만 사용해야 합니다.
+
+	함수 프로토타입은 다음과 같습니다:
+	int isStackPairwiseConsecutive(Stack *s);
+
+	예시:
+	스택이 (16, 15, 11, 10, 5, 4)인 경우:
+	스택: 16 15 11 10 5 4
+	→ pairwise consecutive 맞음 (16-15, 11-10, 5-4 각 쌍이 연속된 숫자)
+
+	스택이 (16, 15, 11, 10, 5, 1)인 경우:
+	스택: 16 15 11 10 5 1
+	→ pairwise consecutive 아님
+
+	스택이 (16, 15, 11, 10, 5)인 경우 (홀수 개):
+	스택: 16 15 11 10 5
+	→ pairwise consecutive 아님
+
+	힌트:
+	크기가 홀수면 0 반환
+	그렇지 않으면 모든 쌍을 확인해서, 하나라도 조건 불만족이면 0 반환
+	모든 검사를 통과하면 1 반환
+*/
 //////////////////////////////////////////////////////////////////////////////////
 
 void push(Stack *s, int item){

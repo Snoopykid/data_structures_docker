@@ -113,14 +113,51 @@ int main()
 
 void createStackFromLinkedList(LinkedList *ll, Stack *s)
 {
-    /* add your code here */
+	ListNode *temp = ll->head;
+
+	removeAllItemsFromStack(s);
+
+	while (temp != NULL) {
+		push(s, temp->item);
+		temp = temp->next;
+	}
+
 }
 
 void removeEvenValues(Stack *s)
 {
-	/* add your code here */
+	if (isEmptyStack(s)){return;} //base case~~~
+	int val;
+
+	val= pop(s);
+	removeEvenValues(s); // recursive case~~~
+
+	if (val % 2 == 1){push(s, val);}
+
+	return;
+
 }
 
+/* 2. (createStackFromLinkedList) 연결 리스트에 저장된 모든 정수를 스택에 push하여 
+	스택(연결 리스트 기반)을 생성하는 C 함수 createStackFromLinkedList()를 작성하십시오.
+	연결 리스트의 첫 번째 노드가 가장 먼저 push되고, 그다음 두 번째 노드, 이런 식으로 진행됩니다.
+	만약 스택이 비어있지 않다면, 시작하기 전에 스택을 반드시 비워야 함을 기억하세요.
+
+	함수 프로토타입은 다음과 같습니다:
+	void createStackFromLinkedList(LinkedList *ll, Stack *stack);
+
+	예시 입출력 (현재 연결 리스트가 1, 3, 5, 6, 7인 경우):
+	결과 연결 리스트: 1 3 5 6 7
+	선택 사항(1/2/3/0)을 입력하세요: 2
+	결과 스택: 7 6 5 3 1
+
+	힌트:
+	ListNode *temp = ll->head;
+	while (temp != NULL) {
+		// 원하는 동작 수행 //
+		temp = temp->next;
+	}
+*/
 //////////////////////////////////////////////////////////////////////////////////
 
 void push(Stack *s, int item)

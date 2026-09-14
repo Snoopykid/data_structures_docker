@@ -87,17 +87,28 @@ int main()
 
 void RecursiveReverse(ListNode **ptrHead)
 {
-	ListNode *first = *ptrHead;
+	ListNode *first = *ptrHead;         // 현재 리스트의 첫 번째 노드를 가리킴
 
-	if (first == NULL || first -> next == NULL){return;}
+	if (first == NULL || first->next == NULL){return;}
+	// base case: 리스트가 비었거나 노드가 1개뿐이면 뒤집을 게 없으므로 종료
 	
+	ListNode *rest = first->next;         // first를 제외한 "나머지 리스트"의 시작점
+	RecursiveReverse(&rest);               // 나머지 리스트를 재귀적으로 먼저 뒤집음
+	                                        //   (재귀가 끝나면 rest는 "뒤집힌 나머지 리스트의 새 head"가 됨)
 
-	ListNode *rest = first->next;
-	RecursiveReverse(&rest);
+	first->next->next = first;               // 뒤집힌 리스트의 맨 끝(원래 first의 다음 노드)이 
+	                                          //   다시 first를 가리키게 연결 (역방향 연결 완성)
+	first->next = NULL;                       // first는 이제 리스트의 맨 끝이 되므로 next를 NULL로
+	*ptrHead = rest;                            // 호출자의 head를, 뒤집힌 리스트의 새 head(rest)로 교체
 
-	first->next->next = first;
-	first->next = NULL;
-	*ptrHead = rest;
+/*
+개선하면 좋을 점: 
+이건 클래식한 재귀 리스트 뒤집기 정석 구현이라 로직상 고칠 부분이 거의 없어요. 딱 하나 참고하실 점: 
+first->next->next = first; 줄에서 first->next가 NULL이 아님이 보장돼야 안전한데, 이건 바로 위의 base case(first->next == NULL이면 이미 return)에서 이미 걸러졌기 때문에 안전합니다. 
+지금처럼 base case를 먼저 확실히 처리해두는 습관이 좋아요. 굳이 아주 사소한 스타일 팁이라면, first->next->next처럼 화살표가 연달아 나오는 표현은 처음엔 헷갈릴 수 있는데, 
+필요하면 ListNode *second = first->next; 같은 중간 변수를 둬서 second->next = first;로 풀어 쓰면 가독성이 좀 더 좋아질 수 있어요 (동작은 완전히 동일).
+*/
+	
 
 /*
 ListNode 두 개, *first, *rest. NULL이면 바로 return. recursive(&rest) 재귀 호출. 

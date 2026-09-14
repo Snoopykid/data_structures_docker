@@ -86,25 +86,34 @@ int main()
 
 void moveOddItemsToBack(LinkedList *ll)
 {
-	int checked = 0;
-	int n = ll -> size;
-	int i = 0;
-	int val = 0;
+	int checked = 0;        // 지금까지 "확인 완료"한 원소 개수 (종료 조건용 카운터)
+	int n = ll->size;        // 원래 리스트 크기를 미리 저장 (중요! 리스트가 계속 재배치되는 동안 size 자체는 안 바뀌지만, "몇 개를 다 확인했는지" 기준을 고정해야 함)
+	int i = 0;                // 지금 검사 중인 인덱스 위치
+	int val = 0;               // 홀수를 발견했을 때 그 값을 임시로 보관할 변수
 
-	while (checked < n)
+	while (checked < n)        // 원래 크기(n)만큼 전부 확인할 때까지 반복
 	{
-		if (findNode(ll, i)->item % 2 == 1){
-			val = findNode(ll, i)-> item;
-			removeNode(ll, i);
-			insertNode(ll, ll->size, val);
-			checked += 1;
+		if (findNode(ll, i)->item % 2 == 1){   // i번째 노드 값이 홀수인지 확인
+			val = findNode(ll, i)->item;         // 홀수 값을 미리 저장 (removeNode 하면 사라지니까)
+			removeNode(ll, i);                    // i번째 노드를 리스트에서 제거
+			insertNode(ll, ll->size, val);        // 제거한 값을 리스트 맨 끝에 다시 삽입
+			checked += 1;                          // 확인한 개수 +1 (i는 그대로 유지! 왜냐면 제거 후 다음 원소가 i번 자리로 당겨졌으니까)
 		}
 		else{
-			i += 1;
-			checked += 1;
+			i += 1;             // 짝수면 그대로 두고 다음 인덱스로 이동
+			checked += 1;        // 확인한 개수 +1
 		}
 	}
-	
+/*
+개선하면 좋을 점:
+1. O(n²) 시간복잡도
+
+2. 만약 성능이 중요한 문제라면, findNode를 반복 호출하지 말고 ListNode *cur 포인터 하나로 직접 순회하면서 짝/홀 판단 + 재배치를 하는 게 훨씬 효율적이에요 
+
+3. findNode(ll, i)->item % 2 == 1과 그 아래 findNode(ll, i)->item이 같은 걸 두 번 호출하고 있어요. ListNode *node = findNode(ll, i);로 한 번만 저장해서
+ 재사용하면 중복 호출을 줄일 수 있어요.
+*/
+
 	
 	/* 
 	3. (moveOddItemsToBackLL) 연결 리스트에서 모든 홀수 정수를 리스트의 뒤쪽으로 옮기는 
