@@ -102,15 +102,26 @@ int main()
 
 int hasGreatGrandchild(BTNode *node)
 {
-    if (node == NULL){return 0;}
-	int depth1 = hasGreatGrandchild(node->left);
-	int depth2 = hasGreatGrandchild(node->right);
+    if (node == NULL){return 0;}         // 빈 노드의 깊이는 0
+    int depth1 = hasGreatGrandchild(node->left);    // 왼쪽에서 계산된 깊이
+    int depth2 = hasGreatGrandchild(node->right);      // 오른쪽에서 계산된 깊이
 
-    int max = (depth1 >= depth2) ? depth1 : depth2;
-    if (max >= 3){printf("\n%d\n", node->item);}
+    int max = (depth1 >= depth2) ? depth1 : depth2;      // 더 깊은 쪽을 선택
+    if (max >= 3){printf("\n%d\n", node->item);}            // 3단계 이상 자손이 있으면 출력
 
-    return max+1;
+    return max+1;    // 나(현재 노드)까지 포함해서 한 단계 올려서 위로 전달
 }
+/*
+개선하면 좋을 점:
+
+로직은 앞서 겪으셨던 버그(depth1/depth2를 각각 따로 검사하다 중복 출력됐던 것)가 정확히 고쳐진 상태예요. 
+최댓값 하나로 합쳐서 딱 한 번만 검사하는 게 정확해요.
+printf("\n%d\n", ...)가 값마다 앞뒤로 줄바꿈을 두 번씩 넣고 있어요. 예시 출력(증손자를 적어도 하나 가진 노드들의 값: 50)처럼 
+한 줄에 공백으로 구분해서 나열하는 걸 원한다면, printf("%d ", node->item);처럼 단순화하는 게 출력 형식과 더 맞을 수 있어요 
+(지금 코드는 노드마다 앞뒤에 빈 줄이 생겨서 출력이 지저분해 보일 수 있어요).
+
+시간복잡도: O(n), 공간복잡도: O(h)
+*/
 
 /* 8. (hasGreatGrandchild) 이진 트리의 모든 노드 중 "증손자(great-grandchild, 
 	즉 3대 아래 자손)"를 적어도 하나 가진 노드들의 값을 출력하는 

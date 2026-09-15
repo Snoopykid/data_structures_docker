@@ -93,6 +93,25 @@ void inOrderTraversal(BSTNode *root)
 	 /* add your code here */
 }
 
+/* 2. (inOrderIterative) 이진 탐색 트리의 중위(in-order) 순회 결과를 출력하는 
+	반복 C 함수 inOrderIterative()를 작성하십시오. 스택을 사용해야 하며, 
+	스택에 정수를 추가/제거할 때는 반드시 push()와 pop()만 사용해야 합니다. 
+	스택이 비어있지 않다면, 시작하기 전에 반드시 스택을 비워야 함을 기억하세요.
+
+	함수 프로토타입은 다음과 같습니다:
+	void inOrderIterative(BSTNode *root);
+
+	For example, for the binary tree in Figure 2, the iterative inorder traversal is:
+	10, 15, 18, 20, 50.
+	(예시: Figure 2의 이진 트리에서, 반복 방식 중위 순회 결과는 10, 15, 18, 20, 50입니다.)
+
+	힌트:
+	- 스택 하나 + "현재 위치"를 가리키는 포인터(cur) 사용
+	- cur이 NULL이 아닌 동안: cur을 push하고, cur = cur->left로 계속 왼쪽으로 내려감
+	- cur이 NULL이 되면: 스택에서 pop해서 그 값을 출력, 그다음 cur = (pop한 노드)->right로 이동
+	- 스택도 비고 cur도 NULL이면 순회 종료
+*/
+
 ///////////////////////////////////////////////////////////////////////////////
 
 void insertBSTNode(BSTNode **node, int value){

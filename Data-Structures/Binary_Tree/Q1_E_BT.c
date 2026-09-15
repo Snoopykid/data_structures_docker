@@ -116,23 +116,21 @@ int main()
 int identical(BTNode *tree1, BTNode *tree2)
 
 {
-    if (tree1 == NULL && tree2 == NULL){return 1;}
-    else if (tree1 == NULL || tree2 == NULL){return 0;}
-    // 값 비교 라인. 값이 다르면 return 0;
-    else if (tree1->item != tree2->item){return 0;}
+    if (tree1 == NULL && tree2 == NULL){return 1;}   // 둘 다 비었으면 같은 구조(동일)
+    else if (tree1 == NULL || tree2 == NULL){return 0;} // 하나만 비었으면 구조가 다름
+    else if (tree1->item != tree2->item){return 0;}      // 값 자체가 다르면 바로 다름 확정
 
     return (identical(tree1->left, tree2->left) && identical(tree1->right, tree2->right));
-    
-    
-    // identical 결과 곱해서 return
-    /*
-   	힌트 (거의 정답 골격):
-	둘 다 NULL이면 return 1
-	하나만 NULL이면 return 0
-	값이 다르면 return 0
-	그 외엔 왼쪽/오른쪽 서브트리의 identical 결과를 곱해서(AND) return
-    */
+    // 왼쪽도 같고 오른쪽도 같아야(&&) 전체가 같음. && 덕분에 왼쪽에서 이미 다르면 오른쪽은 검사도 안 함
 }
+/*
+개선하면 좋을 점: 로직 자체가 정확하고 효율적이에요. **&&의 단락 평가(short-circuit)**가 이미 최적화 역할을 해줘서, 
+왼쪽 서브트리가 다르다는 게 확인되면 오른쪽은 아예 재귀 호출조차 안 해요.
+
+시간복잡도: 두 트리가 완전히 동일하면 모든 노드를 한 번씩 방문 → O(n) (n = 노드 개수). 다르면 그보다 일찍 끝남.
+공간복잡도: 재귀 호출 스택 깊이만큼 → O(h) (h = 트리 높이). 최악의 경우(한쪽으로 쏠린 트리) O(n)까지 갈 수 있음.
+*/
+
 
 /* 1. (identical) 두 개의 이진 트리(tree1, tree2)가 "구조적으로 동일한지" 판별하는 
 	재귀 C 함수 identical()을 작성하십시오. 두 트리가 구조적으로 동일하면 1을 반환하고, 

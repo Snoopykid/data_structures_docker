@@ -102,18 +102,46 @@ int main()
 
 int smallestValue(BTNode *node)
 {
-	if (node == NULL){return 9999;}
-    int minimum = node->item;
-    int left_v = smallestValue(node->left);
-    int right_v = smallestValue(node->right);
+    if (node == NULL){return 9999;}       // 빈 노드는 "매우 큰 값"으로 취급 (비교에서 항상 짐)
+    int minimum = node->item;                // 일단 내 값으로 시작
+    int left_v = smallestValue(node->left);      // 왼쪽 서브트리의 최솟값
+    int right_v = smallestValue(node->right);      // 오른쪽 서브트리의 최솟값
 
-    if ( minimum <= left_v){minimum = minimum;}
-    else if (minimum > left_v){minimum = left_v;}
-    if (minimum <= right_v){minimum = minimum;}
-    else if (minimum > right_v){minimum = right_v;}
+    if ( minimum <= left_v){minimum = minimum;}      // (사실상 아무것도 안 함)
+    else if (minimum > left_v){minimum = left_v;}       // 왼쪽이 더 작으면 갱신
+    if (minimum <= right_v){minimum = minimum;}           // (역시 아무것도 안 함)
+    else if (minimum > right_v){minimum = right_v;}          // 오른쪽이 더 작으면 갱신
     
     return minimum;
 }
+/*
+개선하면 좋을 점 두 가지:
+
+minimum = minimum;은 자기 자신에게 대입하는 무의미한 코드예요 (아무 효과 없음). 이런 식으로 바꾸면 더 깔끔해요:
+
+if (left_v < minimum) minimum = left_v;
+if (right_v < minimum) minimum = right_v;
+
+동작은 완전히 같고, "조건이 참일 때만 갱신"이라는 의도가 더 명확히 드러나요.
+
+9999라는 매직넘버(sentinel)의 위험성: 만약 트리가 완전히 비어있는 상태(root == NULL)에서 이 함수를 바로 호출하면, 
+9999가 그대로 "가장 작은 값"으로 반환돼요 — 실제로는 "트리가 비어서 값이 없다"는 뜻인데, 마치 진짜 값인 것처럼 출력될 수 있어요. 
+또한 만약 트리에 9999 이상의 진짜 값이 들어올 수 있는 상황이라면 (이 문제에서는 가능성이 낮아 보이지만), 로직이 꼬일 여지가 있어요. 
+실무였다면 NULL 트리는 별도로 에러 처리하거나, INT_MAX(더 안전한 "무한대" 값)를 쓰는 게 낫습니다.
+
+smallestValue — BST였다면 O(h)로 끝날 일이에요
+지금 함수는 힌트에서도 명시했듯 "BST가 아니라 일반 이진 트리이므로" 모든 노드를 다 봐야 했던 거예요. 근데 만약 이게 진짜 BST였다면:
+BST에서 최솟값은 항상 "맨 왼쪽 끝 노드"에 있어요. (왼쪽 자식 < 부모, 오른쪽 자식 > 부모라는 규칙 때문에)
+
+int smallestValueBST(BTNode *node) {
+    while (node->left != NULL) node = node->left;
+    return node->item;
+}
+
+이러면 재귀도 필요 없고, O(n) → O(h)로 단축돼요. 균형 잡힌 트리면 O(log n)까지 줄어드는 거죠. 모든 노드를 볼 필요 자체가 없어져요 — 트리의 "정렬되어 있다"는 정보 자체가 지름길이 되는 거예요.
+
+시간복잡도: O(n), 공간복잡도: O(h)
+*/
 
 /* 7. (smallestValue) 주어진 트리에 저장된 값들 중 가장 작은 값을 반환하는 
 	C 함수 smallestValue()를 작성하십시오. 이 함수는 트리의 루트 노드 포인터를 

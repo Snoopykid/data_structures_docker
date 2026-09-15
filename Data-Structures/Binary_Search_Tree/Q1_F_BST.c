@@ -121,6 +121,26 @@ void levelOrderTraversal(BSTNode* root)
     /* add your code here */
 }
 
+
+/* 1. (levelOrderTraversal) 이진 트리를 root 레벨부터 시작해서 "레벨 단위로" 순회하며 
+	출력하는 반복(iterative) C 함수 levelOrderTraversal을 작성하십시오. 
+	큐를 사용해야 하며, 큐에 정수를 추가/제거할 때는 반드시 enqueue()와 dequeue()만 
+	사용해야 합니다. 큐가 비어있지 않다면, 시작하기 전에 반드시 큐를 비워야 함을 기억하세요.
+
+	함수 프로토타입은 다음과 같습니다:
+	void levelOrderIterative(BSTNode *root);
+
+	For example, for the binary tree in Figure 1, the level order tree traversal is:
+	20, 15, 50, 10, 18, 25, 80.
+	(예시: Figure 1의 이진 트리에서, 레벨 순서 순회 결과는 20, 15, 50, 10, 18, 25, 80입니다.)
+
+	힌트:
+	- 큐를 이용한 BFS(너비 우선 탐색) 방식
+	- root를 먼저 enqueue
+	- 큐가 빌 때까지 반복: dequeue한 노드를 출력 → 그 노드의 왼쪽 자식이 있으면 enqueue, 
+	  오른쪽 자식이 있으면 enqueue (왼쪽 먼저 enqueue해야 같은 레벨에서 왼→오 순서가 유지됨)
+*/
+
 ///////////////////////////////////////////////////////////////////////////////
 
 void insertBSTNode(BSTNode **node, int value){

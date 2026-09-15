@@ -101,19 +101,29 @@ int main()
 int countOneChildNodes(BTNode *node)
 
 {
-    if (node == NULL){return 0;}
+    if (node == NULL){return 0;}      // 빈 노드는 셀 게 없음
 
     int lLeaf = 0;
     int rLeaf = 0;
 
-    lLeaf = countOneChildNodes(node->left);
-    rLeaf = countOneChildNodes(node->right);
+    lLeaf = countOneChildNodes(node->left);    // 왼쪽 서브트리에서 찾은 개수
+    rLeaf = countOneChildNodes(node->right);      // 오른쪽 서브트리에서 찾은 개수
 
-    if ((node->left != NULL && node->right == NULL) || 
-        (node->left == NULL && node->right != NULL)){return lLeaf + rLeaf + 1;}
-    else {return lLeaf + rLeaf;}
+    if ((node->left != NULL && node->right == NULL) ||    // 왼쪽만 있거나
+        (node->left == NULL && node->right != NULL)){return lLeaf + rLeaf + 1;}  // 오른쪽만 있으면 +1
+    else {return lLeaf + rLeaf;}     // 둘 다 있거나 둘 다 없으면 그대로 전달
 
 }
+/*
+개선하면 좋을 점: 정확해요. 조건문을 XOR(배타적 논리합) 느낌으로 좀 더 짧게 쓸 수도 있어요:
+
+****** if ((node->left == NULL) != (node->right == NULL)) *******
+
+"왼쪽이 NULL인지"와 "오른쪽이 NULL인지"가 **서로 다를 때(하나만 NULL일 때)**를 뜻하는데, 지금 코드보다 한 줄이 짧아져요 (기능은 완전히 동일, 취향 차이).
+
+시간복잡도: O(n), 공간복잡도: O(h)
+*/
+
 
 /* 3. (countOneChildNodes) 이진 트리의 루트 노드를 가리키는 포인터를 받아서, 
 	자식이 정확히 하나뿐인 노드의 개수를 반환하는 C 함수 countOneChildNodes()를 

@@ -103,23 +103,25 @@ int main()
 int sumOfOddNodes(BTNode *node)
 
 {
-    if (node == NULL){return 0;}
+    if (node == NULL){return 0;}     // 빈 노드는 더할 게 없음
 
     int value = 0;
     int left = 0;
     int right = 0;
 
-    left = sumOfOddNodes(node->left);
-    right = sumOfOddNodes(node->right);
+    left = sumOfOddNodes(node->left);      // 왼쪽 서브트리 홀수 합
+    right = sumOfOddNodes(node->right);      // 오른쪽 서브트리 홀수 합
 
-    value += node->item;
-    if (value % 2 == 1){return left + right + value;}
-    else {return left + right;}
-
-
-
-
+    value += node->item;                       // 현재 노드 값을 저장
+    if (value % 2 == 1){return left + right + value;}   // 홀수면 더해서 반환
+    else {return left + right;}                             // 짝수면 그냥 전달
 }
+/*
+개선하면 좋을 점: 로직 정확해요. 다만 int value = 0; value += node->item;은 그냥 int value = node->item; 한 줄로 충분해요 — 
+0으로 초기화한 뒤 바로 더하는 건 불필요한 단계예요 (동작은 완전히 같음, 그냥 코드가 한 줄 줄어드는 정도).
+
+시간복잡도: O(n), 공간복잡도: O(h)
+*/
 
 /* 4. (sumOfOddNodes) 정수형 이진 트리의 루트 노드를 가리키는 포인터를 받아서, 
 	트리 안의 모든 홀수 값들의 합을 반환하는 재귀 C 함수 sumOfOddNodes()를 

@@ -105,13 +105,37 @@ int main()
 
 void printSmallerValues(BTNode *node, int m)
 {
-	if (node == NULL){return;}
-    if (node->item < m ){printf("%d ", node->item);}
-    printSmallerValues(node->left, m);
-    printSmallerValues(node->right, m);
+    if (node == NULL){return;}          // 빈 노드는 출력할 게 없음
+    if (node->item < m ){printf("%d ", node->item);}     // 기준값보다 작으면 출력
+    printSmallerValues(node->left, m);                       // 왼쪽 서브트리 검사
+    printSmallerValues(node->right, m);                         // 오른쪽 서브트리 검사
 
     return;
 }
+/*
+개선하면 좋을 점: 정확해요. 여기서 짚을 점 하나 — 이건 BST(이진 탐색 트리)가 아니라 일반 이진 트리라서, 값이 어디에나 있을 수 있어요. 
+그래서 "왼쪽이 다 크니까 안 가봐도 된다" 같은 가지치기(pruning)가 불가능하고, 모든 노드를 다 방문해야만 정확한 결과가 나와요. 
+(만약 이게 BST였다면, node->item >= m일 때 오른쪽 서브트리를 건너뛰는 최적화가 가능했을 텐데, 일반 이진 트리라 그럴 수 없어요.)
+
+printSmallerValues — BST였다면 오른쪽 가지 전체를 건너뛸 수 있어요
+
+if (node->item < m ){printf("%d ", node->item);}
+printSmallerValues(node->left, m);
+printSmallerValues(node->right, m);
+
+일반 이진 트리에서는 값이 어디에나 있을 수 있어서, 왼쪽/오른쪽 둘 다 무조건 다 봐야 해요. 근데 진짜 BST라면:
+node->item >= m이면, 오른쪽 서브트리는 전부 node->item보다 크다는 게 BST 규칙으로 보장되니까, 오른쪽엔 m보다 작은 값이 하나도 없을 게 확실해요. 그러니 오른쪽 가지 전체를 아예 안 봐도 돼요.
+
+if (node->item < m) {
+    printf("%d ", node->item);
+    printSmallerValuesBST(node->right, m);   // 왼쪽도 오른쪽도 다 볼 필요 있음
+}
+printSmallerValuesBST(node->left, m);          // 왼쪽은 항상 봐야 함 (m보다 작은 값이 있을 수 있으니)
+
+이러면 **최악의 경우(트리 전체가 m보다 작을 때)엔 여전히 O(n)**이지만, 평균적으로는 가지치기(pruning) 덕분에 훨씬 빨라져요 — 특히 m이 작으면 오른쪽 서브트리들을 대거 건너뛰게 되거든요.
+
+시간복잡도: O(n) (전체 노드 방문이 불가피), 공간복잡도: O(h)
+*/
 
 /* 6. (printSmallerValues) 이진 트리의 루트 노드 포인터와 기준값 m을 받아서, 
 	트리 안에 저장된 값들 중 m보다 작은 모든 정수를 출력하는 

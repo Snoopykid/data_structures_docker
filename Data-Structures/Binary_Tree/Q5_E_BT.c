@@ -105,18 +105,23 @@ int main()
 
 void mirrorTree(BTNode *node)
 {
-	if (node == NULL){return;}
+    if (node == NULL){return;}        // 빈 노드는 거울로 만들 게 없음
 
-    mirrorTree(node->left);
-    mirrorTree(node->right);
+    mirrorTree(node->left);               // 왼쪽 서브트리 먼저 거울로 만듦
+    mirrorTree(node->right);                // 오른쪽 서브트리도 거울로 만듦
 
-    BTNode *temp = node->left;
-    node->left = node->right;
-    node->right = temp;
-    
-    
+    BTNode *temp = node->left;                // 왼쪽을 임시로 저장
+    node->left = node->right;                    // 오른쪽을 왼쪽 자리로
+    node->right = temp;                             // 저장해둔 원래 왼쪽을 오른쪽 자리로
+
     return;
 }
+/*
+개선하면 좋을 점: "중간 트리나 임시 트리를 만들면 안 된다"는 요구사항을 정확히 만족해요 — 포인터 하나(temp)만 임시로 쓰고, 
+실제 데이터 복사나 새 트리 생성이 전혀 없어요. 딱 이상적인 in-place 구현이에요.
+
+시간복잡도: O(n), 공간복잡도: O(h) (추가 자료구조 없이 재귀 스택만 사용)
+*/
 
 /* 5. (mirrorTree) 이진 트리를 변형해서, 원래 구조의 "거울상(mirror image)"이 되도록 
 	만드는 재귀 C 함수 mirrorTree()를 작성하십시오. 중간 트리나 임시 트리를 

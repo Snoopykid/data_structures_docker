@@ -94,6 +94,24 @@ void preOrderIterative(BSTNode *root)
 	 /* add your code here */
 }
 
+/* 3. (preOrderIterative) 이진 탐색 트리의 전위(pre-order) 순회 결과를 출력하는 
+	반복 C 함수 preOrderIterative()를 작성하십시오. 스택을 사용해야 하며, 
+	스택에 정수를 추가/제거할 때는 반드시 push()와 pop()만 사용해야 합니다. 
+	스택이 비어있지 않다면, 시작하기 전에 반드시 스택을 비워야 함을 기억하세요.
+
+	함수 프로토타입은 다음과 같습니다:
+	void preOrderIterative(BSTNode *root);
+
+	For example, for the binary tree in Figure 3, the iterative preorder tree traversal is:
+	20, 15, 10, 18, 50, 25, 80.
+	(예시: Figure 3의 이진 트리에서, 반복 방식 전위 순회 결과는 20, 15, 10, 18, 50, 25, 80입니다.)
+
+	힌트:
+	- root를 먼저 push
+	- 스택이 빌 때까지 반복: pop해서 즉시 출력 → 그 노드의 오른쪽 자식을 먼저 push, 
+	  왼쪽 자식을 나중에 push (스택은 LIFO라서, 나중에 push한 왼쪽이 다음번에 먼저 나옴)
+*/
+
 ///////////////////////////////////////////////////////////////////////////////
 
 void insertBSTNode(BSTNode **node, int value){

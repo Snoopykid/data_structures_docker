@@ -97,17 +97,25 @@ int main()
 int maxHeight(BTNode *node)
 
 {
-    if (node == NULL){return -1;}
+    if (node == NULL){return -1;}          // 빈 트리 높이는 -1
     int lHeight = 0;
     int rHeight = 0;
 
-    lHeight += maxHeight(node->left);
-    rHeight += maxHeight(node->right);
+    lHeight += maxHeight(node->left);         // 왼쪽 서브트리 높이 계산
+    rHeight += maxHeight(node->right);          // 오른쪽 서브트리 높이 계산
 
-    if (lHeight >= rHeight){return lHeight +1;}
+    if (lHeight >= rHeight){return lHeight +1;}   // 더 큰(또는 같은) 쪽 + 1 반환
     else if (lHeight < rHeight){return rHeight +1;}
     
 }
+/*
+개선하면 좋을 점: 로직은 정확한데, 마지막 else if를 그냥 else로 바꾸는 게 좋아요. 지금 구조는 컴파일러 입장에서 
+"모든 경로가 확실히 return하는지" 증명이 안 돼서 -Wreturn-type 경고가 나요 (실제로는 논리상 항상 걸리지만, 컴파일러가 그걸 못 알아챔). 
+else로 바꾸면 경고도 사라지고 의도도 더 명확해져요.
+
+시간복잡도: 모든 노드를 정확히 한 번씩 방문 → O(n)
+공간복잡도: O(h)
+*/
 
 /* 2. (maxHeight) 이진 트리의 루트 노드를 가리키는 포인터를 받아서, 
 	루트에서 가장 먼 리프 노드까지의 최장 경로 상의 링크 개수(높이)를 반환하는 

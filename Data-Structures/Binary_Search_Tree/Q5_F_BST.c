@@ -100,6 +100,29 @@ BSTNode* removeNodeFromTree(BSTNode *root, int value)
 {
 	/* add your code here */
 }
+
+/* 5. (postOrderIterativeS2) 이진 탐색 트리의 후위(post-order) 순회 결과를 출력하는 
+	반복 C 함수 postOrderIterativeS2()를 작성하십시오. 스택 "두 개"를 사용해야 하며, 
+	스택에 정수를 추가/제거할 때는 반드시 push()와 pop()만 사용해야 합니다. 
+	스택이 비어있지 않다면, 시작하기 전에 반드시 스택을 비워야 함을 기억하세요.
+
+	함수 프로토타입은 다음과 같습니다:
+	void postOrderIterativeS2(BSTNode *root);
+
+	For example, for the binary tree in Figure 5, the iterative postorder tree traversal is:
+	10, 18, 15, 25, 80, 50, 20.
+	(예시: Figure 5의 이진 트리에서, 반복 방식 후위 순회 결과는 10, 18, 15, 25, 80, 50, 20입니다.)
+
+	힌트 (문제 4보다 훨씬 간단한 방법):
+	- 핵심 아이디어: "Root → Right → Left" 순서로 순회한 결과를 뒤집으면, 
+	  정확히 "Left → Right → Root"(post-order)가 된다는 성질을 이용
+	- 첫 번째 스택(s1)에 root를 push. s1이 빌 때까지 반복: pop한 노드를 
+	  두 번째 스택(s2)에 push → 그 노드의 왼쪽 자식을 먼저 s1에 push, 오른쪽 자식을 
+	  나중에 s1에 push (그래야 s1에서 다음번에 오른쪽이 먼저 나와서 Root→Right→Left 순서가 됨)
+	- s1이 다 빌 때까지 반복한 뒤, s2를 처음부터 끝까지 pop하면서 출력 
+	  (s2는 스택이라 "거꾸로 쌓인" 상태이므로, pop하는 순서 자체가 이미 post-order가 됨)
+*/
+
 ///////////////////////////////////////////////////////////////////////////////
 
 void insertBSTNode(BSTNode **node, int value){
