@@ -111,20 +111,28 @@ int main()
 
 void removeUntil(Stack *s, int value)
 {
-	if (s->ll.size == 0){return;}
-	int size = s->ll.size;
+	if (s->ll.size == 0){return;}         // 스택이 처음부터 비어있으면 할 게 없으니 종료
+	int size = s->ll.size;                   // 원래 스택 크기를 미리 저장 (반복 횟수 상한선 용도)
 
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < size; i++)             // 최대 size번까지만 반복 (무한루프 방지용 안전장치)
 	{
-		if (s->ll.head->item == value)
+		if (s->ll.head->item == value)             // 현재 스택 맨 위 값이 찾던 값과 같으면
 		{
-			return ;
+			return;                                   // 더 이상 지울 필요 없으니 바로 종료
 		}
-		pop(s);
+		pop(s);                                         // 같지 않으면 맨 위 값을 하나 제거
 	}
 	return;
-
 }
+/* 
+개선하면 좋을 점: 
+지난번의 핵심 버그(별도의 sHead 포인터를 만들어서 pop 이후에도 계속 그걸 따라가려다 free된 메모리에 접근했던 문제)를 정확히 고치셨어요 —
+매번 s->ll.head를 직접 확인하는 방식으로 바꾸신 게 정답이었습니다. 
+한 가지 짚어드리고 싶은 부분은 for문의 i < size 조건의 역할이에요: 이건 "정확히 size번 반복해야 하는" 로직이 아니라, 
+"찾는 값이 스택에 아예 없을 경우, 무한히 pop하지 않도록 막아주는 안전장치" 역할이에요. 만약 value가 스택 어디에도 없다면, 
+이 상한선이 없으면 빈 스택에서 계속 pop을 시도하다가 문제가 생길 수 있는데(s->ll.head->item에서 head가 NULL이면 크래시), 
+지금처럼 size로 상한을 걸어두신 게 좋은 방어적 설계예요.
+*/
 
 /* 6. (removeUntilStack) 스택에서 특정 값이 처음 나타날 때까지 값을 계속 pop하는 
 	C 함수 removeUntilStack()를 작성하십시오.

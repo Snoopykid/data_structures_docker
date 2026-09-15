@@ -113,30 +113,34 @@ int main()
 
 void createStackFromLinkedList(LinkedList *ll, Stack *s)
 {
-	ListNode *temp = ll->head;
+	ListNode *temp = ll->head;      // 원본 연결 리스트의 첫 노드부터 순회 시작
 
-	removeAllItemsFromStack(s);
+	removeAllItemsFromStack(s);      // 시작 전에 스택을 무조건 비움 (요구사항)
 
-	while (temp != NULL) {
-		push(s, temp->item);
-		temp = temp->next;
+	while (temp != NULL) {              // 원본 리스트 끝까지 순회
+		push(s, temp->item);               // 현재 노드의 값을 스택에 push (원본은 안 건드림)
+		temp = temp->next;                   // 다음 노드로 이동
 	}
-
 }
 
 void removeEvenValues(Stack *s)
 {
-	if (isEmptyStack(s)){return;} //base case~~~
+	if (isEmptyStack(s)){return;}      // base case: 더 꺼낼 게 없으면 재귀 종료
 	int val;
 
-	val= pop(s);
-	removeEvenValues(s); // recursive case~~~
+	val = pop(s);                        // 맨 위 값을 하나 꺼내서 보관 (호출스택에 저장됨)
+	removeEvenValues(s);                  // recursive case: 나머지(더 아래쪽)를 먼저 재귀적으로 처리
 
-	if (val % 2 == 1){push(s, val);}
-
+	if (val % 2 == 1){push(s, val);}        // 재귀가 끝나고 돌아온 뒤, 보관해둔 값이 홀수면 다시 push
+                                              //   (짝수면 그냥 버려짐 — 아무것도 안 하니 자연스럽게 제거됨)
 	return;
-
 }
+/*
+개선하면 좋을 점: 
+지난번 세그폴트 원인이었던 s == NULL 체크를 isEmptyStack(s)로 정확히 고치셨고, 
+나머지 구조(pop → 재귀 → 조건부 push)도 완벽해요. 딱 하나, 함수 끝의 return;은 void 함수라서 사실 없어도 되는 코드예요 
+(함수 끝에 자연히 도달하면 알아서 종료되니까). 있어도 틀린 건 아니고 완전히 무해하지만, 지우면 한 줄 더 간결해집니다.
+*/
 
 /* 2. (createStackFromLinkedList) 연결 리스트에 저장된 모든 정수를 스택에 push하여 
 	스택(연결 리스트 기반)을 생성하는 C 함수 createStackFromLinkedList()를 작성하십시오.

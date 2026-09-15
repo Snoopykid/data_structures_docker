@@ -107,26 +107,26 @@ int isStackPairwiseConsecutive(Stack *s)
 	int b = 0;
 	int result;
 
-	if (s->ll.size % 2 == 1){return 0;}
-	if (s->ll.size == 0){return 1;}
+	if (s->ll.size % 2 == 1){return 0;}     // 크기가 홀수면 애초에 쌍을 만들 수 없으니 바로 실패
+	if (s->ll.size == 0){return 1;}          // base case: 검사할 게 남아있지 않으면(끝까지 통과했거나 애초에 비었으면) 성공으로 처리
 	
-	a = pop(s);
-	b = pop(s);
+	a = pop(s);                                // 위에서부터 두 개를 pop (a=먼저 나온 값=더 위쪽)
+	b = pop(s);                                 //   (b=두 번째로 나온 값)
 
-	if (abs(a-b) != 1)
+	if (abs(a-b) != 1)                           // 두 값의 차이가 1이 아니면(연속 아님)
 	{
-		push(s, b);
+		push(s, b);                                // 원래 순서로 복원 (꺼낸 순서의 반대로 다시 넣음)
 		push(s, a);
 
-		return 0;
+		return 0;                                     // 실패 확정
 	}
-	else
+	else                                            // 연속된 값이면
 	{
-		result = isStackPairwiseConsecutive(s);
-		push(s, b);
+		result = isStackPairwiseConsecutive(s);        // recursive case: 나머지 쌍들에 대해 재귀적으로 계속 검사
+		push(s, b);                                      // 검사 후 원래 순서대로 복원
 		push(s, a);
 
-		return result;
+		return result;                                     // 재귀 결과를 그대로 위로 전달
 	}  
 }
 

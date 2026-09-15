@@ -112,38 +112,41 @@ int main()
 
 void reverse(Queue *q)
 {
-	if (isEmptyQueue(q)){return;}
-	Stack s;
-	s.ll.head = NULL;
+	if (isEmptyQueue(q)){return;}      // 큐가 비어있으면 뒤집을 게 없으니 바로 종료
+	Stack s;                              // 포인터가 아니라 "진짜 Stack 구조체 실체"를 하나 만듦
+	s.ll.head = NULL;                       // 직접 초기화 (빈 스택 상태로)
 	s.ll.size = 0;
-	int popq;
-	int sSize;
-	int pops;
+	int popq;                                 // 큐에서 꺼낸 값을 담을 임시 변수
+	int sSize;                                  // 스택 크기를 저장해둘 변수
+	int pops;                                     // 스택에서 꺼낸 값을 담을 임시 변수
 
-	int qSize = q->ll.size;
+	int qSize = q->ll.size;                          // 원래 큐 크기를 미리 저장 (루프 도는 동안 
+	                                                //   크기가 계속 변하니 고정된 기준값 필요)
 	
-	while (qSize)
+	while (qSize)                                        // 원래 큐 크기만큼 반복
 	{
-		popq = dequeue(q);
-		push(&s, popq);
-		qSize--;
-
+		popq = dequeue(q);                                  // 큐 맨 앞에서 하나 꺼냄
+		push(&s, popq);                                       // 꺼낸 값을 스택에 push
+		qSize--;                                                // 반복 횟수 카운트 감소
+ 
 	}
 	
-	sSize = s.ll.size;
+	sSize = s.ll.size;                    // 옮긴 후의 스택 크기 저장 (이 시점엔 스택 크기 = 원래 큐 크기와 같음)
 
-	while (sSize)
+	while (sSize)                                                  // 스택 크기만큼 반복
 	{
-		pops = pop(&s);
-		enqueue(q, pops);
-		sSize--;
+		pops = pop(&s);                                              // 스택 맨 위에서 하나 꺼냄
+		enqueue(q, pops);                                              // 다시 큐 뒤에 넣음
+		sSize--;                                                         // 반복 횟수 감소
 	}
-	
-	
-
-	
-
 }
+/*
+개선하면 좋을 점:
+sSize = s.ll.size;를 굳이 별도로 다시 구할 필요 없이, 사실 qSize와 항상 같은 값이에요 
+(큐에서 꺼낸 개수만큼 정확히 스택에 쌓였으니까). 그래서 sSize 변수를 새로 안 만들고 qSize를 재사용해도
+(예: 두 번째 while 전에 qSize = q->ll.size 다시 세팅 없이 원래 저장해둔 값을 그대로 또 써도) 결과는 같아요. 
+다만 지금처럼 명확하게 별도 변수로 나눈 것도 가독성 면에서 전혀 나쁘지 않습니다 — 선택의 문제예요.
+*/
 
 /* 4. (reverseQueue) 스택을 이용해 큐를 뒤집는 C 함수 reverseQueue()를 작성하십시오.
 	이 함수는 스택에 값을 추가/제거할 때 반드시 push()와 pop()만 사용해야 하고, 

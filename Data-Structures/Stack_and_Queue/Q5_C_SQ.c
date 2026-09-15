@@ -109,12 +109,18 @@ int main()
 
 void recursiveReverse(Queue *q)
 {	
-	int temp;
-	if (q->ll.head == NULL) return;
-	temp = dequeue(q);
-	recursiveReverse(q);
-	enqueue(q, temp);
+	int temp;                            // dequeue한 값을 임시 보관할 변수
+	if (q->ll.head == NULL) return;        // base case: 큐가 비었으면 뒤집을 게 없으니 종료
+	temp = dequeue(q);                       // 맨 앞 값을 하나 꺼내서 보관 (호출스택에 저장됨)
+	recursiveReverse(q);                       // 나머지 큐를 먼저 재귀적으로 뒤집음
+	enqueue(q, temp);                            // 재귀가 다 끝난 뒤, 보관해둔 값을 맨 뒤에 추가
 }
+/*
+개선하면 좋을 점: 이건 사실상 힌트에 있던 정답 그대로라 고칠 부분이 없어요. 동작 원리만 짚어드리면 — 
+"가장 먼저 꺼낸 값(원래 맨 앞이었던 값)이 재귀가 다 끝난 뒤 맨 마지막에 enqueue되니까, 결과적으로 그 값이 새 큐의 맨 뒤로 가게 되는" 구조예요. 
+RecursiveReverse(연결 리스트 버전)와 원리가 유사하지만, 여기선 포인터 재연결 없이 순수하게 dequeue/enqueue 순서 조작만으로 
+뒤집기를 구현한 점이 흥미로운 차이예요.
+*/
 
 /* 5. (recursiveReverseQueue) 정수들이 저장된 큐의 순서를 재귀적으로 뒤집는 C 함수 
 	recursiveReverseQueue()를 작성하십시오.

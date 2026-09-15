@@ -104,39 +104,47 @@ int main()
 ////////////////////////////////////////////////////////////
 int balanced(char *expression)
 {
-	if (expression == NULL){return	1;}
-	Stack s;
-	s.ll.head = NULL;
+	if (expression == NULL){return 1;}      // NULL 문자열이면 애매한 케이스지만 일단 균형된 것으로 처리
+	Stack s;                                   // Stack 실체를 직접 선언 (포인터 아님)
+	s.ll.head = NULL;                            // 빈 스택으로 초기화
 	s.ll.size = 0;
-	int top;
+	int top;                                       // peek로 확인한 스택 맨 위 값을 담을 변수
 
-	for (int i = 0; expression[i] != '\0'; i++)
+	for (int i = 0; expression[i] != '\0'; i++)      // 문자열 끝(\0)까지 한 글자씩 순회
 	{
 		if (expression[i] == '(' || expression[i] == '[' ||expression[i] == '{')
-		{
-			push(&s, expression[i]);
+		{                                                    // 여는 괄호를 만나면
+			push(&s, expression[i]);                             // 스택에 push
 		}
 		else if (expression[i] == ')' || expression[i] == ']' ||expression[i] == '}')
-		{
-			top = peek(&s);
-			if ((top == '(' && expression[i] == ')') || 
+		{                                                          // 닫는 괄호를 만나면
+			top = peek(&s);                                          // 스택 맨 위를 확인 (꺼내지 않고 보기만)
+			if ((top == '(' && expression[i] == ')') ||                // 짝이 맞는 조합인지 확인
 				(top == '{' && expression[i] == '}') || 
 				(top == '[' && expression[i] == ']') )
 			{
-				pop(&s);
+				pop(&s);                                                  // 짝이 맞으면 실제로 pop해서 제거
 			}
 			
 		}
 		
 	}
 	
-	if (s.ll.size != 0)
+	if (s.ll.size != 0)                                               // 순회가 다 끝난 뒤 스택에 뭔가 남아있으면
 	{
-		return 1;
+		return 1;                                                        // 짝이 안 맞은 게 있다는 뜻 → not balanced
 	}
-	else {return 0;}
+	else {return 0;}                                                    // 스택이 완전히 비었으면 → balanced
 		
 }
+/*
+개선하면 좋을 점: 
+로직 정확하고, 지난번 겪으셨던 두 가지 버그(peek(&s) == expression[i]로 잘못 비교했던 것, &s.ll.size != 0으로 주소를 비교했던 것) 
+모두 정확히 고치셨어요. 딱 한 가지 참고할 점: 짝이 하나도 안 맞는 케이스(예: (])를 만났을 때 지금 코드는 "아무것도 안 하고 그냥 다음 문자로 넘어가는" 
+방식이에요. 최종적으로는 스택에 뭔가 남아서 어차피 1(not balanced)로 정확히 걸러지긴 하지만, 만약 "짝이 안 맞는 순간 바로 실패 처리하고 싶다"면 
+else 절을 추가해서 즉시 return 1;을 할 수도 있어요. 다만 지금 방식도 최종 결과는 항상 정확하니, 이건 순수히 "더 빨리 끝낼지 vs 끝까지 다 훑을지"의 
+스타일 차이일 뿐 버그는 아닙니다.
+*/
 
 /* 7. (balanced) ()[]{} 문자로만 구성된 표현식이 "균형이 맞는지(balanced)" 판별하는 
 	C 함수 balanced()를 작성하십시오.

@@ -103,7 +103,22 @@ int main()
 int sumOfOddNodes(BTNode *node)
 
 {
-    /* add your code here */
+    if (node == NULL){return 0;}
+
+    int value = 0;
+    int left = 0;
+    int right = 0;
+
+    left = sumOfOddNodes(node->left);
+    right = sumOfOddNodes(node->right);
+
+    value += node->item;
+    if (value % 2 == 1){return left + right + value;}
+    else {return left + right;}
+
+
+
+
 }
 
 /* 4. (sumOfOddNodes) 정수형 이진 트리의 루트 노드를 가리키는 포인터를 받아서, 

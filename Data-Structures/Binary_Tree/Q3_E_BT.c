@@ -101,7 +101,18 @@ int main()
 int countOneChildNodes(BTNode *node)
 
 {
-    /* add your code here */
+    if (node == NULL){return 0;}
+
+    int lLeaf = 0;
+    int rLeaf = 0;
+
+    lLeaf = countOneChildNodes(node->left);
+    rLeaf = countOneChildNodes(node->right);
+
+    if ((node->left != NULL && node->right == NULL) || 
+        (node->left == NULL && node->right != NULL)){return lLeaf + rLeaf + 1;}
+    else {return lLeaf + rLeaf;}
+
 }
 
 /* 3. (countOneChildNodes) 이진 트리의 루트 노드를 가리키는 포인터를 받아서, 

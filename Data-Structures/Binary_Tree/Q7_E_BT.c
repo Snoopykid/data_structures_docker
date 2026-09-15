@@ -102,7 +102,17 @@ int main()
 
 int smallestValue(BTNode *node)
 {
-	/* add your code here */
+	if (node == NULL){return 9999;}
+    int minimum = node->item;
+    int left_v = smallestValue(node->left);
+    int right_v = smallestValue(node->right);
+
+    if ( minimum <= left_v){minimum = minimum;}
+    else if (minimum > left_v){minimum = left_v;}
+    if (minimum <= right_v){minimum = minimum;}
+    else if (minimum > right_v){minimum = right_v;}
+    
+    return minimum;
 }
 
 /* 7. (smallestValue) 주어진 트리에 저장된 값들 중 가장 작은 값을 반환하는 

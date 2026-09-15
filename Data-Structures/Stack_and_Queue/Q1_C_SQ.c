@@ -116,33 +116,44 @@ int main()
 
 void createQueueFromLinkedList(LinkedList *ll, Queue *q)
 {
-	ListNode *temp = ll->head;
+	ListNode *temp = ll->head;      // 원본 연결 리스트의 첫 노드부터 순회를 시작할 임시 포인터
 
-	removeAllItemsFromQueue(q);
+	removeAllItemsFromQueue(q);      // 큐가 비어있지 않을 수도 있으니, 시작 전에 무조건 큐를 비움
+	                                   //   (내부에서 NULL 체크와 빈 큐 처리까지 다 해주므로 별도 조건문 불필요)
 		
-	while (temp != NULL) {
-			// 
-		enqueue(q, temp->item) ;
-		temp = temp->next;
+	while (temp != NULL) {              // 원본 리스트 끝까지 순회
+		enqueue(q, temp->item);           // 현재 노드의 값을 큐에 새로 삽입 (원본은 건드리지 않고 값만 복사)
+		temp = temp->next;                 // 다음 노드로 이동
 	}
 }
+/*
+개선하면 좋을 점:
+굳이 아주 사소한 스타일 팁이라면, removeAllItemsFromQueue(q)를 while 루프보다 먼저 호출하는 순서가 지금처럼 
+"먼저 치우고 나서 새로 채운다"는 흐름이라 직관적이에요. 지금 순서 그대로가 자연스럽고 좋습니다.
+*/
 
 void removeOddValues(Queue *q)
 {
-	int size = q->ll.size;	
-	int val;
+	int size = q->ll.size;         // 원래 큐의 크기를 미리 저장 (루프 도는 동안 enqueue로 size가 다시 늘어나므로, 
+								  // 실시간 size를 조건으로 쓰면 안 됨)
+	int val;                          // dequeue한 값을 담을 임시 변수
 
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < size; i++)      // 원래 크기만큼만 정확히 반복 (한 바퀴만 순회)
 	{
-		val = dequeue(q);
-		if (val % 2 != 0)
-			{continue;}
-		else if (val % 2 == 0)
+		val = dequeue(q);                 // 큐 맨 앞에서 값을 하나 꺼냄 (동시에 "순회 + 확인"을 겸함)
+		if (val % 2 != 0)                   // 꺼낸 값이 홀수면
+			{continue;}                       //   아무것도 안 하고 다음 반복으로 (이미 꺼냈으니 "제거" 완료)
+		else if (val % 2 == 0)                // 짝수면
 		{
-			enqueue(q, val);
+			enqueue(q, val);                    // 다시 큐 뒤에 넣어서 순서를 유지하며 보존
 		}
 	}
 }
+/*
+개선하면 좋을 점:
+아주 사소한 스타일 제안: if (조건) continue; else if (반대조건) {...} 구조는, 사실 val % 2 != 0과 val % 2 == 0이 
+서로 정확히 반대라서 else if 대신 그냥 else를 써도 완전히 동일하게 동작해요:
+*/
 
 /* 1. (createQueueFromLinkedList) 연결 리스트에 저장된 모든 정수를 큐(연결 리스트 기반)에 
 	enqueue하여 큐를 생성하는 C 함수 createQueueFromLinkedList()를 작성하십시오.

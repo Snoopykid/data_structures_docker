@@ -105,7 +105,17 @@ int main()
 
 void mirrorTree(BTNode *node)
 {
-	/* add your code here */
+	if (node == NULL){return;}
+
+    mirrorTree(node->left);
+    mirrorTree(node->right);
+
+    BTNode *temp = node->left;
+    node->left = node->right;
+    node->right = temp;
+    
+    
+    return;
 }
 
 /* 5. (mirrorTree) 이진 트리를 변형해서, 원래 구조의 "거울상(mirror image)"이 되도록 

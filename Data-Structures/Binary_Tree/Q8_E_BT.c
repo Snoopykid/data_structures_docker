@@ -102,7 +102,14 @@ int main()
 
 int hasGreatGrandchild(BTNode *node)
 {
-	/* add your code here */
+    if (node == NULL){return 0;}
+	int depth1 = hasGreatGrandchild(node->left);
+	int depth2 = hasGreatGrandchild(node->right);
+
+    int max = (depth1 >= depth2) ? depth1 : depth2;
+    if (max >= 3){printf("\n%d\n", node->item);}
+
+    return max+1;
 }
 
 /* 8. (hasGreatGrandchild) 이진 트리의 모든 노드 중 "증손자(great-grandchild, 

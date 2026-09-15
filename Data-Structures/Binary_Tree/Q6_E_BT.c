@@ -105,7 +105,12 @@ int main()
 
 void printSmallerValues(BTNode *node, int m)
 {
-	/* add your code here */
+	if (node == NULL){return;}
+    if (node->item < m ){printf("%d ", node->item);}
+    printSmallerValues(node->left, m);
+    printSmallerValues(node->right, m);
+
+    return;
 }
 
 /* 6. (printSmallerValues) 이진 트리의 루트 노드 포인터와 기준값 m을 받아서, 
