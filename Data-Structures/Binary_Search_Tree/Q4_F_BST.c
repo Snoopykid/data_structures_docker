@@ -91,7 +91,32 @@ int main()
 
 void postOrderIterativeS1(BSTNode *root)
 {
-	 /* add your code here */
+	if (root == NULL){return;}
+	Stack s;	s.top = NULL;
+	BSTNode* lastvisited = NULL;
+
+	push(&s, root);
+
+	while (!isEmpty(&s))
+	{
+		BSTNode* cur = peek(&s);
+		if ((cur->left == NULL && cur->right == NULL) || 
+			(cur->left != NULL && cur->left == lastvisited && cur->right == NULL) || 
+			(cur->right != NULL && cur->right == lastvisited))
+			{ 
+			lastvisited = pop(&s);
+			printf("%d ", lastvisited->item);
+			}
+		else{
+			cur = peek(&s);
+			if (cur->right != NULL)
+				{push(&s, cur->right);}
+			if (cur->left != NULL)
+				{push(&s, cur->left);}
+
+
+		}
+	}
 }
 
 /* 4. (postOrderIterativeS1) 이진 탐색 트리의 후위(post-order) 순회 결과를 출력하는 
@@ -101,6 +126,9 @@ void postOrderIterativeS1(BSTNode *root)
 
 	함수 프로토타입은 다음과 같습니다:
 	void postOrderIterativeS1(BSTNode *node);
+
+	Figure 4와 똑같은 모양을 실제로 만들어서 함수를 검증해보고 싶으면, 루트부터 위에서 아래로 넣어야 합니다:
+	20 → 15 → 50 → 10 → 18 → 25 → 80
 
 	For example, for the binary tree in Figure 4, the iterative postorder tree traversal is:
 	10, 18, 15, 25, 80, 50, 20.

@@ -103,16 +103,20 @@ int countOneChildNodes(BTNode *node)
 {
     if (node == NULL){return 0;}      // 빈 노드는 셀 게 없음
 
-    int lLeaf = 0;
-    int rLeaf = 0;
+    // int lLeaf = countOneChildNodes(node->left);    // 왼쪽 서브트리에서 찾은 개수
+    // int rLeaf = countOneChildNodes(node->right);      // 오른쪽 서브트리에서 찾은 개수
+
+    int lLeaf;
+    int rLeaf;
 
     lLeaf = countOneChildNodes(node->left);    // 왼쪽 서브트리에서 찾은 개수
     rLeaf = countOneChildNodes(node->right);      // 오른쪽 서브트리에서 찾은 개수
 
+
     if ((node->left != NULL && node->right == NULL) ||    // 왼쪽만 있거나
         (node->left == NULL && node->right != NULL)){return lLeaf + rLeaf + 1;}  // 오른쪽만 있으면 +1
     else {return lLeaf + rLeaf;}     // 둘 다 있거나 둘 다 없으면 그대로 전달
-
+ 
 }
 /*
 개선하면 좋을 점: 정확해요. 조건문을 XOR(배타적 논리합) 느낌으로 좀 더 짧게 쓸 수도 있어요:

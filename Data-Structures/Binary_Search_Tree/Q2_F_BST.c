@@ -90,7 +90,19 @@ int main()
 
 void inOrderTraversal(BSTNode *root)
 {
-	 /* add your code here */
+	if (root == NULL){return;}
+	Stack s;	s.top = NULL;
+
+	push(&s, root);
+	// enqueue(&q.head, &q.tail, root);
+	while (!isEmpty(&s))
+	{
+		BSTNode* popnode = pop(&s);
+		if(popnode->left != NULL) {push(&s, popnode->left);}
+		printf("%d ", popnode->item);
+		if(popnode->right != NULL) {push(&s, popnode->right);}
+	}
+	
 }
 
 /* 2. (inOrderIterative) 이진 탐색 트리의 중위(in-order) 순회 결과를 출력하는 
