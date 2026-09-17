@@ -91,14 +91,54 @@ int main()
 
 void postOrderIterativeS2(BSTNode *root)
 {
-	 /* add your code here */
+	if (root == NULL){return;}
+	Stack s1, s2;	s1.top = NULL;	s2.top = NULL;
+
+	push(&s1, root);
+
+	while (!isEmpty(&s1))
+	{
+		BSTNode* cur = pop(&s1);
+		push(&s2, cur);
+
+		if (cur->left != NULL){push(&s1, cur->left);}
+		if (cur->right != NULL){push(&s1, cur->right);}
+	}
+	while (!isEmpty(&s2))
+	{
+		BSTNode* cur = pop(&s2);
+		printf("%d ", cur->item);
+	}
 }
+
 
 /* Given a binary search tree and a key, this function
    deletes the key and returns the new root. Make recursive function. */
 BSTNode* removeNodeFromTree(BSTNode *root, int value)
 {
-	/* add your code here */
+	if (root == NULL){return NULL;}
+	if (value < root->item){root->left = removeNodeFromTree(root->left, value);}
+	else if (value > root->item){root->left = removeNodeFromTree(root->left, value);}
+	else if (value == root->item){
+		if (root->left == NULL && root->right == NULL){return NULL;}
+		
+		else if (root->left == NULL && root->right != NULL){return root->right;} 
+		else if (root->left != NULL && root->right == NULL){return root->left;}
+
+		else if (root->left != NULL && root->right != NULL){
+			BSTNode* successor = root->right;
+			while (successor->left != NULL)
+			{
+				successor = successor->left;
+			}
+			root->item = successor->item;
+			root->right = removeNodeFromTree(root->right, successor->item);
+			return root;}
+		
+	}
+	
+	
+	
 }
 
 /* 5. (postOrderIterativeS2) 이진 탐색 트리의 후위(post-order) 순회 결과를 출력하는 
@@ -121,7 +161,7 @@ BSTNode* removeNodeFromTree(BSTNode *root, int value)
 	  나중에 s1에 push (그래야 s1에서 다음번에 오른쪽이 먼저 나와서 Root→Right→Left 순서가 됨)
 	- s1이 다 빌 때까지 반복한 뒤, s2를 처음부터 끝까지 pop하면서 출력 
 	  (s2는 스택이라 "거꾸로 쌓인" 상태이므로, pop하는 순서 자체가 이미 post-order가 됨)
-*/
+*/  
 
 ///////////////////////////////////////////////////////////////////////////////
 
